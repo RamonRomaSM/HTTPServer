@@ -5,19 +5,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 
 public class Client {
-	/*
-	 * El programador usara esta clase para crear sus respuestas, hay que facilitar la creacion
-	 * de respuestas http.
-	 * 
-	 * http codes:
-	 * Respuestas informativas (100–199),
-	 * Respuestas satisfactorias (200–299),
-	 * Redirecciones (300–399),
-	 * Errores de los clientes (400–499),
-	 * y errores de los servidores (500–599).
-	 * 
-	 * "HTTP/1.1 200 OK\r\n\r\n".getbytes+ respuesta custom
-	 * */
+	
 	
 	
 	private Socket soc;

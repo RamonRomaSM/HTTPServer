@@ -8,7 +8,7 @@ public class Client {
 	
 	
 	
-	private Socket soc;
+	Socket soc;
 	private InputStream in;
 	private OutputStream out;
 	

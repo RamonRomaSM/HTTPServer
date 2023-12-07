@@ -87,6 +87,7 @@ public class ServerHTTP {
 			}
 		} catch (Exception e) {
 			System.out.println("Failed initializing the server");
+			e.printStackTrace();
 		}
 		
 	}

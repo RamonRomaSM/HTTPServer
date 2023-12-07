@@ -24,16 +24,15 @@ public class ServerHTTP {
 		
 	}
 	/*
-	 *TODO:	
+	 *TODO:	la request es "algo?" lleva el ? para separarlo de los dato
 	 * 
 	 * 
 	 * */
 	public void addRequest(String req,Response r) {
-		String s="/";
-		if(req.charAt(0)!='/'&&req.length()!=1) {
-			s=req;
-		}
-		responses.put(s, r);
+		
+		
+		responses.put(req, r);
+		System.out.println("Added request: "+req);
 		
 	}
 	public void initialize() {

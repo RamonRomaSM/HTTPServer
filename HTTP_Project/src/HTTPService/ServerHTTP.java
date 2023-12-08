@@ -12,12 +12,16 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.swing.plaf.synth.SynthOptionPaneUI;
+
 
 public class ServerHTTP {
 	private ServerSocket servSock;
 	private String reqAct;
 	private Socket clienteact;
 	private HashMap<String,Response> responses;
+	private ResponseHandler handler;	
+	
 	
 	public ServerHTTP() {
 		responses=new HashMap<String,Response>();
@@ -40,6 +44,11 @@ public class ServerHTTP {
 		System.out.println("Handled requests: "+responses.keySet().toString());
 		
 		setServerPort();
+		try {
+			handler=new ResponseHandler(responses);
+		} catch (IOException e) {
+			System.err.println("Failed declaring the handler");
+		}	
 		File f=new File(".//errorLog.txt");
 		File f2=new File(".//log.txt");
 		
@@ -68,18 +77,23 @@ public class ServerHTTP {
 				petic=petic+br.readLine()+"\r";
 				
 			}
-			
+			System.out.println(petic);
 			
 			
 			//here we isolate the request
 			String[] datosPeticion=petic.split("\r");
-			reqAct=datosPeticion[0].split(" ")[1];
+			
+			String datos=datosPeticion[datosPeticion.length-1];
+			
+			reqAct=datosPeticion[0].split(" ")[1]+" "+datos;
 			
 			
-			
-			ResponseHandler handler=new ResponseHandler(responses);			
-			handler.resolve(reqAct, clienteact);		
+			//here we resolve 
+			//the request is formed by 2 parts separated by " ", te tequest, and the data from the form
 			System.out.println("ACTUAL REQUEST: "+reqAct);
+			
+			handler.resolve(reqAct.split(" ")[0], clienteact);		
+			
 			
 			
 		

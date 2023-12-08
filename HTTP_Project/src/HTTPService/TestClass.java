@@ -13,28 +13,21 @@ public class TestClass {
 			
 			@Override
 			public void execute(Client client) throws NotHandledRequestException, IOException {
-				System.out.println("ESTO ES LO QUE HAY "+client.toString());
-				login(client.soc);
+				System.out.println("SE LE DA EL LOGIN ");
+				login(client);
 			}
 		});
 		server.initialize();
 		
 	}
-	static void login(Socket clienteact) throws IOException {
+	static void login(Client clienteact) throws IOException {
 		
 
-		File arc=new File("src\\login.html");
+		File arc=new File("C:\\Users\\win10\\Documents\\GitHub\\HTTPServer\\HTTP_Project\\src\\login.html");
 		
 		FileInputStream fis=new FileInputStream(arc);
 		
-		OutputStream os=clienteact.getOutputStream();
-		
-		
-		os.write(("HTTP/1.1 200 OK\r\n").getBytes()); 
-		os.write(("\r\n").getBytes());	
-										
-		os.write(fis.readAllBytes());
-		os.flush();
+		clienteact.send(fis.readAllBytes());
 	
 		
 	}

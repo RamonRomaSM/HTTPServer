@@ -38,12 +38,16 @@ public class ResponseHandler {
 			logWriter.write("\rUser: "+client+" Requested: "+req+" "+LocalDateTime.now()+"\r");
 			logWriter.flush();
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.err.println("Request not handled: "+req+"\r");			
 			errorWriter.write("\rRequest not handled: "+req+" "+LocalDateTime.now()+"\r");
 			errorWriter.flush();
 		}
 		
 	}
+	
+	
+	
 	
 	
 	protected Response findResponse(String req) {

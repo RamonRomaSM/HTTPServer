@@ -32,9 +32,9 @@ public class ResponseHandler {
 	}
 	
 	
-	protected void resolve(String req,Socket client) throws IOException {
+	protected void resolve(String req,Socket client,String rawRequest) throws IOException {
 		try {
-			findResponse(req).execute(new Client(client));						
+			findResponse(req).execute(new Client(client,rawRequest));						
 			logWriter.write("\rUser: "+client+" Requested: "+req+" "+LocalDateTime.now()+"\r");
 			logWriter.flush();
 		} catch (Exception e) {

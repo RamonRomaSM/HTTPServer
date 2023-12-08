@@ -15,6 +15,7 @@ public class TestClass {
 			public void execute(Client client) throws NotHandledRequestException, IOException {
 				System.out.println("SE LE DA EL LOGIN ");
 				login(client);
+				System.out.println(client.getRawRequest());
 			}
 		});
 		server.initialize();
@@ -23,7 +24,7 @@ public class TestClass {
 	static void login(Client clienteact) throws IOException {
 		
 
-		File arc=new File("C:\\Users\\win10\\Documents\\GitHub\\HTTPServer\\HTTP_Project\\src\\login.html");
+		File arc=new File(".\\HTTP_Project\\src\\login.html");
 		
 		FileInputStream fis=new FileInputStream(arc);
 		

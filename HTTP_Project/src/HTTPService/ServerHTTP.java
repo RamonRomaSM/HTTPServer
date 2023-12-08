@@ -21,14 +21,14 @@ public class ServerHTTP {
 	private Socket clienteact;
 	private HashMap<String,Response> responses;
 	private ResponseHandler handler;	
-	
+	private String rawRequest;
 	
 	public ServerHTTP() {
 		responses=new HashMap<String,Response>();
 		
 	}
 	/*
-	 *TODO:	la request es "algo?" lleva el ? para separarlo de los dato
+	 *TODO:	
 	 * 
 	 * 
 	 * */
@@ -36,18 +36,18 @@ public class ServerHTTP {
 		
 		
 		responses.put(req, r);
-		System.out.println("Added request: "+req);
+		System.out.println("[SERVER] Added request: "+req);
 		
 	}
 	public void initialize() {
 		
-		System.out.println("Handled requests: "+responses.keySet().toString());
+		System.out.println("[SERVER] Handled requests: "+responses.keySet().toString());
 		
 		setServerPort();
 		try {
 			handler=new ResponseHandler(responses);
 		} catch (IOException e) {
-			System.err.println("Failed declaring the handler");
+			System.err.println("[SERVER] Failed declaring the handler");
 		}	
 		File f=new File(".//errorLog.txt");
 		File f2=new File(".//log.txt");
@@ -58,30 +58,28 @@ public class ServerHTTP {
 		
 		if(!f.exists()) {f.createNewFile();}
 		if(!f2.exists()) {f2.createNewFile();}
-		System.out.println("SERVER LOCATED IN :  "+InetAddress.getLocalHost().toString().split("/")[1]+":"+servSock.getLocalPort()+"\r\r");
+		System.out.println("[SERVER] Server located at :  "+InetAddress.getLocalHost().toString().split("/")[1]+":"+servSock.getLocalPort()+"\r\r");
 		
 		
 		
 		
 		while(true) {
 			clienteact=servSock.accept();		
-			System.out.println("ACTUAL CLIENT: "+clienteact.toString());
+			System.out.println("[SERVER] Actual client: "+clienteact.toString());
 			
 			
 			
 			//Here we recieve the raw request
 			InputStreamReader isr=  new InputStreamReader(clienteact.getInputStream());
 			BufferedReader br= new BufferedReader(isr);
-			String petic=br.readLine();
+			rawRequest=br.readLine();
 			while(br.ready()) {
-				petic=petic+br.readLine()+"\r";
+				rawRequest=rawRequest+br.readLine()+"\r";
 				
-			}
-			System.out.println(petic);
-			
+			}			
 			
 			//here we isolate the request
-			String[] datosPeticion=petic.split("\r");
+			String[] datosPeticion=rawRequest.split("\r");
 			
 			String datos=datosPeticion[datosPeticion.length-1];
 			
@@ -90,9 +88,9 @@ public class ServerHTTP {
 			
 			//here we resolve 
 			//the request is formed by 2 parts separated by " ", te tequest, and the data from the form
-			System.out.println("ACTUAL REQUEST: "+reqAct);
+			System.out.println("[SERVER] Actual request: "+reqAct);
 			
-			handler.resolve(reqAct.split(" ")[0], clienteact);		
+			handler.resolve(reqAct.split(" ")[0], clienteact,rawRequest);		
 			
 			
 			
@@ -100,7 +98,7 @@ public class ServerHTTP {
 		
 			}
 		} catch (Exception e) {
-			System.out.println("Failed initializing the server");
+			System.out.println("[SERVER] Failed initializing the server");
 			e.printStackTrace();
 		}
 		

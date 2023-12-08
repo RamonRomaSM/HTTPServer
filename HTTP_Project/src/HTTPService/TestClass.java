@@ -10,7 +10,7 @@ public class TestClass {
 	public static void main(String[] args) {
 		ServerHTTP server=new ServerHTTP();
 		server.addRequest("/", new Response() {
-			
+			 
 			@Override
 			public void execute(Client client) throws NotHandledRequestException, IOException {
 				System.out.println("SE LE DA EL LOGIN ");
@@ -22,14 +22,9 @@ public class TestClass {
 		
 	}
 	static void login(Client clienteact) throws IOException {
-		
-
-		File arc=new File(".\\HTTP_Project\\src\\login.html");
-		
-		FileInputStream fis=new FileInputStream(arc);
-		
-		clienteact.send(fis.readAllBytes());
-	
+		File arc=new File(".\\HTTP_Project\\src\\login.html");		
+		FileInputStream fis=new FileInputStream(arc);		
+		clienteact.send(fis.readAllBytes());	
 		
 	}
 }

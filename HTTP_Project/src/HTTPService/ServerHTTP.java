@@ -27,11 +27,6 @@ public class ServerHTTP {
 		responses=new HashMap<String,Response>();
 		
 	}
-	/*
-	 *TODO:	
-	 * 
-	 * 
-	 * */
 	public void addRequest(String req,Response r) {
 		
 		
@@ -52,23 +47,13 @@ public class ServerHTTP {
 		File f=new File(".//errorLog.txt");
 		File f2=new File(".//log.txt");
 		
-		try {
-			
-		
-		
+		try {							
 		if(!f.exists()) {f.createNewFile();}
 		if(!f2.exists()) {f2.createNewFile();}
-		System.out.println("[SERVER] Server located at :  "+InetAddress.getLocalHost().toString().split("/")[1]+":"+servSock.getLocalPort()+"\r\r");
-		
-		
-		
-		
+		System.out.println("[SERVER] Server located at :  "+InetAddress.getLocalHost().toString().split("/")[1]+":"+servSock.getLocalPort()+"\r\r");		
 		while(true) {
 			clienteact=servSock.accept();		
-			System.out.println("[SERVER] Actual client: "+clienteact.toString());
-			
-			
-			
+			System.out.println("[SERVER] Actual client: "+clienteact.toString());			
 			//Here we recieve the raw request
 			InputStreamReader isr=  new InputStreamReader(clienteact.getInputStream());
 			BufferedReader br= new BufferedReader(isr);
@@ -79,23 +64,14 @@ public class ServerHTTP {
 			}			
 			
 			//here we isolate the request
-			String[] datosPeticion=rawRequest.split("\r");
-			
-			String datos=datosPeticion[datosPeticion.length-1];
-			
-			reqAct=datosPeticion[0].split(" ")[1]+" "+datos;
-			
-			
+			String[] datosPeticion=rawRequest.split("\r");			
+			String datos=datosPeticion[datosPeticion.length-1];			
+			reqAct=datosPeticion[0].split(" ")[1]+" "+datos;			
 			//here we resolve 
 			//the request is formed by 2 parts separated by " ", te tequest, and the data from the form
 			System.out.println("[SERVER] Actual request: "+reqAct);
 			
-			handler.resolve(reqAct.split(" ")[0], clienteact,rawRequest);		
-			
-			
-			
-		
-		
+			handler.resolve(reqAct.split(" ")[0], clienteact,rawRequest);				
 			}
 		} catch (Exception e) {
 			System.out.println("[SERVER] Failed initializing the server");
@@ -113,18 +89,15 @@ public class ServerHTTP {
 				init=true;
 			} catch (Exception e) {
 				i++;
-			}
-			
-		}
-		
+			}			
+		}		
 	}
 	public void close() {
 		try {
 			servSock.close();
 		} catch (IOException e) {
 			
-		}
-		
+		}		
 	}
 	
 	
